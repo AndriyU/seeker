@@ -1,0 +1,10 @@
+# PyCharm
+.idea
+*.pyc
+.project
+venv
+local.cfg
+logs
+.DS_Store
+*.patch
+log

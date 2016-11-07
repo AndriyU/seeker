@@ -1,4 +1,5 @@
-from .base import *
+from .base_model import *
+
 
 class GeoAddressDetails(db.Model, BaseModel):
     __tablename__ = 'address_details'
@@ -26,13 +27,13 @@ class Address(db.Model, BaseModel):
         db.Index('npi_address_zip_code', 'zip_code', postgresql_using='hash'),
         db.Index('npi_address_latitude', 'latitude', postgresql_using='hash'),
         db.Index('npi_address_longitude', 'longitude', postgresql_using='hash'),
-        db.Index('npi_address_checksum', 'checksum', postgresql_using='hash'),
+        db.Index('npi_address_id', 'id', postgresql_using='hash'),
     )
     __tablename__ = 'address'
-    __public__ = ['checksum', 'npi', 'zip_long', 'zip_code', 'state', 'city', 'street_address', 'street_address2',
+    __public__ = ['id', 'npi', 'zip_long', 'zip_code', 'state', 'city', 'street_address', 'street_address2',
                   'suppress_street_address2', 'phone_number', 'fax_number', 'primary', 'latitude', 'longitude',
                   'practice', 'handicap_access', 'hours', 'formatted_address', 'url_path', 'display_phone', 'address_type']
-    checksum = db.Column(db.BigInteger, primary_key=True, autoincrement=False)
+    id = db.Column(db.BigInteger, primary_key=True, autoincrement=False)
     npi = db.Column(db.BigInteger)
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)

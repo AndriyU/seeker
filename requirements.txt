@@ -1,0 +1,46 @@
+# base web framework
+requests
+webargs
+
+# debug in style
+ipdb
+
+# geo
+geopy
+pycountry
+python-geoip
+python-geoip-geolite2
+
+# Testing
+pytest
+
+Flask
+flask-migrate
+SQLAlchemy==1.0.9
+Flask-SQLAlchemy==2.1
+SQLAlchemy-Utils
+Flask-Script==2.0.5
+Flask-Security
+
+crcmod
+psycopg2
+xmltodict
+geoalchemy2
+
+#us states
+us
+msgpack-python
+tqdm
+
+# for sphinx mysql
+MySQL-python
+
+#memcache
+redis
+pylibmc
+flask-cache
+
+#uwsgi
+uwsgi
+bs4==0.0.1
+

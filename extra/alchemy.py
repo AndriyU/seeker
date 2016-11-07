@@ -1,5 +1,4 @@
 import random
-import _mysql
 from functools import wraps
 from sqlalchemy.sql.selectable import Select
 from flask import request
@@ -54,22 +53,3 @@ class RoutingSession(SignallingSession):
 class SQLAlchemy(sqlA):
     def create_session(self, options):
         return RoutingSession(self, **options)
-
-
-class SphinxMysql():
-    config = {
-        'SPHINX_HOST': '127.0.0.1',
-        'SPHINX_PORT': 3307
-    }
-
-    def init_app(self, config=None):
-        "This is used to initialize cache with your app object"
-        if not (config is None or isinstance(config, dict)):
-            raise ValueError("`config` must be an instance of dict or None")
-        self.config = config
-
-    def connection(self):
-        return _mysql.connect(host=self.config['SPHINX_HOST'], port=int(self.config['SPHINX_PORT']))
-
-    def cursor(self):
-        return self.connection.cursor()
