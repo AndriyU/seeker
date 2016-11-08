@@ -1,3 +1,4 @@
 # seeker
 
-Search person near place
+Search object/person near coordinates/address/place
+

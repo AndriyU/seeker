@@ -32,9 +32,6 @@ us
 msgpack-python
 tqdm
 
-# for sphinx mysql
-MySQL-python
-
 #memcache
 redis
 pylibmc
