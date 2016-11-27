@@ -24,6 +24,7 @@ class SpecialtyDetails(db.Model, BaseModel):
     description = db.Column(db.Text, default='', nullable=False)
     url_path = db.Column(db.String(512))
     synonyms = db.Column(db.Text)
+    popularity = db.Column(db.Integer)
 
     reason_to_visit = db.relationship('SpecialtyReasonToVisit',
                                       primaryjoin=id == SpecialtyReasonToVisit.specialty_id,

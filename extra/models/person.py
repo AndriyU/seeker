@@ -18,11 +18,12 @@ class Person(db.Model, BaseModel):
                  postgresql_ops={'last_name': 'gin_trgm_ops'}, postgresql_where=text('pcp is True')),
     )
 
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=False)
-    npi = db.Column(db.BigInteger, autoincrement=False)
+    uid = db.Column(db.BigInteger, primary_key=True, autoincrement=False)
+    uid_type = db.Column(db.Enum('npi', 'uid', 'ssn', 'barcode', name='organization_uid_type_ext'))
     first_name = db.Column(db.String(50))
     middle_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
+    title = db.Column(db.String(200))
     suffix = db.Column(db.String(10))
     gender = db.Column(db.String(1))
     credential = db.Column(db.String(20))
@@ -34,7 +35,7 @@ class Person(db.Model, BaseModel):
 
     @property
     def person_title(self):
-        return u"{name}{middle} {last}{suffix}{credential}".format(
+        return self.title or u"{name}{middle} {last}{suffix}{credential}".format(
             name=self.first_name,
             middle=self.middle_name and u' {}'.format(self.middle_name) or '',
             last=self.last_name,
@@ -51,11 +52,11 @@ class Person(db.Model, BaseModel):
 
     @property
     def specialty_codes(self):
-        return db.session.query(MySpecialty.specialty_code).filter(MySpecialty.person_id == self.id).all()
+        return db.session.query(MySpecialty.specialty_code).filter(MySpecialty.person_id == self.uid).all()
 
     @property
     def specialties(self):
-        return SpecialtyDetails.query.filter(MySpecialty.person_id == self.id).all()
+        return SpecialtyDetails.query.filter(MySpecialty.person_id == self.uid).all()
 
     @property
     def reasons_to_visit(self):
@@ -66,4 +67,4 @@ class Person(db.Model, BaseModel):
 
     @property
     def services(self):
-        return MyService.query.filter(MyService.person_id == self.id).all()
+        return MyService.query.filter(MyService.person_id == self.uid).all()
