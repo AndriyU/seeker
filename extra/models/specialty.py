@@ -5,13 +5,13 @@ class SpecialtyReasonToVisit(db.Model, Serializer):
     __tablename__ = 'specialty_reason_to_visit'
 
     reason_id = db.Column(db.Integer, primary_key=True)
-    specialty_id = db.Column(db.Integer, db.ForeignKey('medtool.specialty.id'), nullable=False)
+    specialty_id = db.Column(db.Integer, db.ForeignKey('public.specialty.id'), nullable=False)
     reason_text = db.Column(db.Text, default='')
 
 
 class SpecialtyDetails(db.Model, BaseModel):
     __tablename__ = 'specialty'
-    __table_args__ = {'schema': 'medtool'}
+    __table_args__ = {'schema': 'public'}
 
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(20), unique=True)
