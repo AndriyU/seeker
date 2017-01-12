@@ -18,7 +18,7 @@ distance_calc = '''AND ST_DWithin(Geography(ST_MakePoint(longitude, latitude)),
                 Geography(ST_MakePoint(:longitude, :latitude)),
                 :radius * 1609.34)'''
 
-SQL = """SELECT p.id, p.url_path, p.title, p.gender,
+SQL = """SELECT p.uid, p.uid_type, p.url_path, p.title, p.gender,
                 {distance_select} as distance,
                 min(a.checksum) as addresses_checksum
                 FROM public.person as p
