@@ -43,11 +43,11 @@ class Organization(db.Model, BaseModel):
 
     @property
     def specialty_codes(self):
-        return db.session.query(MySpecialty.specialty_code).filter(MySpecialty.person_id == self.uid).all()
+        return db.session.query(MySpecialty.specialty_code).filter(MySpecialty.person_uid == self.uid).all()
 
     @property
     def specialties(self):
-        return SpecialtyDetails.query.filter(MySpecialty.person_id == self.uid).all()
+        return SpecialtyDetails.query.filter(MySpecialty.person_uid == self.uid).all()
 
     @property
     def reasons_to_visit(self):
@@ -58,4 +58,4 @@ class Organization(db.Model, BaseModel):
 
     @property
     def services(self):
-        return MyService.query.filter(MyService.person_id == self.uid).all()
+        return MyService.query.filter(MyService.person_uid == self.uid).all()

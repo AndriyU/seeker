@@ -33,13 +33,13 @@ class SpecialtyDetails(db.Model, BaseModel):
 
 class MySpecialty(db.Model, BaseModel):
     __tablename__ = 'person_specialty'
-    __table_args__ = (db.Index('person_specialty_npi_idx', 'npi', postgresql_using='hash'),
+    __table_args__ = (db.Index('person_specialty_person_uid_idx', 'person_uid', postgresql_using='hash'),
                       db.Index('person_specialty_specialty_code_idx', 'specialty_code', postgresql_using='hash'))
     __public__ = ['specialty_code', 'license_number', 'license_start', 'license_end', 'primary', 'board_name',
                   'board_eligible', 'board_certified', 'board_permanent', 'classification', 'specialization']
 
     id = db.Column(db.BigInteger, primary_key=True, autoincrement=False)
-    person_id = db.Column(db.BigInteger)
+    person_uid = db.Column(db.BigInteger)
     specialty_code = db.Column(db.String(10))
     license_number = db.Column(db.String(20))
     license_start = db.Column(db.Date)

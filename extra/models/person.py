@@ -46,17 +46,17 @@ class Person(db.Model, BaseModel):
     @property
     def addresses(self):
         return Address.query.filter(
-            Address.npi == self.npi,
+            Address.resident_uid == self.uid,
             or_(Address.practice == True, Address.practice.is_(None))
         ).all()
 
     @property
     def specialty_codes(self):
-        return db.session.query(MySpecialty.specialty_code).filter(MySpecialty.person_id == self.uid).all()
+        return db.session.query(MySpecialty.specialty_code).filter(MySpecialty.person_uid == self.uid).all()
 
     @property
     def specialties(self):
-        return SpecialtyDetails.query.filter(MySpecialty.person_id == self.uid).all()
+        return SpecialtyDetails.query.filter(MySpecialty.person_uid == self.uid).all()
 
     @property
     def reasons_to_visit(self):
@@ -67,4 +67,4 @@ class Person(db.Model, BaseModel):
 
     @property
     def services(self):
-        return MyService.query.filter(MyService.person_id == self.uid).all()
+        return MyService.query.filter(MyService.person_uid == self.uid).all()
