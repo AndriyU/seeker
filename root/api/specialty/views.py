@@ -15,7 +15,7 @@ from extra.models.specialty import SpecialtyDetails, MySpecialty
     'codes': fields.request_string,
     'code': fields.request_string
 })
-def doctor_specialty_group(batch, short, codes, code):
+def specialty(batch, short, codes, code):
     if batch:
         query = db.session.query(SpecialtyDetails).order_by(SpecialtyDetails.display_name)
         if codes:
@@ -30,8 +30,8 @@ def doctor_specialty_group(batch, short, codes, code):
     else:
         if not code or short:
             return return_response('Precondition Failed', 412)
-        specialty_group = SpecialtyDetails.query.get_or_404(code)
-        return return_response(specialty_group.serialize())
+        specialty= SpecialtyDetails.query.get_or_404(code)
+        return return_response(specialty.serialize())
 
 
 def get_specialty_code(url_path):
@@ -54,7 +54,7 @@ def get_specialty_url_path(code):
     'order_by': fields.request_string,
     'order_type': fields.sord
 })
-def autocomplete_by_specialty_group(query, limit, order_by, order_type):
+def autocomplete_by_specialty(query, limit, order_by, order_type):
     search_query = db.session.query(
                                     SpecialtyDetails.classification,
                                     SpecialtyDetails.specialization,

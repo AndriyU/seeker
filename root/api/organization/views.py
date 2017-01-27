@@ -118,7 +118,6 @@ def organization_search(uid, uid_type, name, url_path, radius, latitude, longitu
 
 
 @api.route('/organization/')
-# @cache.memoize_considering_request()
 @use_kwargs({
     'uid': fields.request_int,
     'url_path': fields.request_string})
@@ -134,8 +133,7 @@ def organization_details(uid, url_path):
     return return_response(organization.serialize())
 
 
-@api.route('/pharmacy/batch/')
-# @cache.memoize_considering_request()
+@api.route('/organization/batch/')
 @use_kwargs({'uids': fields.request_int_required})
 def organization_details_batch(uids):
     uid_list = split_int_ids(uids)
@@ -144,8 +142,7 @@ def organization_details_batch(uids):
     return return_response([o.serialize() for o in organisations if o])
 
 
-@api.route('/pharmacy/count/<any(state, county, city, zip_code):group_by>/')
-# @cache.memoize_considering_request()
+@api.route('/organization/count/<any(state, county, city, zip_code):group_by>/')
 @use_kwargs({
     'type': fields.request_string,
     'state': fields.state,
@@ -153,7 +150,10 @@ def organization_details_batch(uids):
     'city': fields.city,
     'zip_code': fields.zip_code,
 })
-def pharmacy_count(group_by, type, state, county, city, zip_code):
+def organization_count(group_by, type, state, county, city, zip_code):
+    '''
+    SHOW count of organisation in place
+    '''
     if group_by == 'county':
         group_field = GeoAddressDetails.county_name
     elif group_by == 'zip_code':
@@ -162,8 +162,8 @@ def pharmacy_count(group_by, type, state, county, city, zip_code):
     else:
         group_field = getattr(Address, group_by)
 
-    query = db.session.query(func.count(Pharmacy.npi.distinct()), group_field). \
-        join(Address, Pharmacy.npi == Address.npi)
+    query = db.session.query(func.count(Organization.uid.distinct()), group_field). \
+        join(Address, Organization.uid == Address.resident_uid)
     if group_by == 'county' or county:
         query = query.join(GeoAddressDetails, GeoAddressDetails.zip_code == Address.zip_code)
 

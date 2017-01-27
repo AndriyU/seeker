@@ -22,8 +22,7 @@ SQL = """SELECT p.uid, p.uid_type, p.url_path, p.title, p.gender,
                 {distance_select} as distance,
                 min(a.checksum) as addresses_checksum
                 FROM public.person as p
-                JOIN public.address as a ON p.id = a.person_id
-                JOIN public.address as a ON p.id = a.person_id
+                JOIN public.address as a ON p.id = a.person_uid
          WHERE {where}
              {distance_calc}
          GROUP BY p.id
