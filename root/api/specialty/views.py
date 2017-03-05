@@ -30,8 +30,8 @@ def specialty(batch, short, codes, code):
     else:
         if not code or short:
             return return_response('Precondition Failed', 412)
-        specialty= SpecialtyDetails.query.get_or_404(code)
-        return return_response(specialty.serialize())
+        sp= SpecialtyDetails.query.get_or_404(code)
+        return return_response(sp.serialize())
 
 
 def get_specialty_code(url_path):
