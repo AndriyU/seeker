@@ -2,7 +2,7 @@ from operator import itemgetter
 from pprint import pprint
 from extra.geo_utils import get_address_details
 from extra import db
-from extra.models.specialty import SpecialtyDetails
+from extra.models.specialty import SpecialtyInfo
 from extra.models.address import Address
 
 

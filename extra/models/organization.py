@@ -2,7 +2,7 @@ from .base_model import *
 from sqlalchemy import PrimaryKeyConstraint
 
 from .address import Address
-from specialty import SpecialtyDetails, MySpecialty, SpecialtyReasonToVisit
+from specialty import SpecialtyInfo, MySpecialty, SpecialtyReasonToVisit
 from service import MyService
 
 
@@ -47,14 +47,14 @@ class Organization(db.Model, BaseModel):
 
     @property
     def specialties(self):
-        return SpecialtyDetails.query.filter(MySpecialty.person_uid == self.uid).all()
+        return SpecialtyInfo.query.filter(MySpecialty.person_uid == self.uid).all()
 
     @property
     def reasons_to_visit(self):
         specialties_codes = [s[0] for s in self.specialty_codes]
         return SpecialtyReasonToVisit.query. \
-            join(SpecialtyDetails, SpecialtyReasonToVisit.specialty_id == SpecialtyDetails.uid). \
-            filter(SpecialtyDetails.code.in_(specialties_codes)).all()
+            join(SpecialtyInfo, SpecialtyReasonToVisit.specialty_id == SpecialtyInfo.uid). \
+            filter(SpecialtyInfo.code.in_(specialties_codes)).all()
 
     @property
     def services(self):
