@@ -44,19 +44,19 @@ def service(batch, short, codes, code):
 })
 def autocomplete_by_service(query, limit, order_by, order_type):
     search_query = db.session.query(
-                                    SpecialtyInfo.classification,
-                                    SpecialtyInfo.specialization,
-                                    SpecialtyInfo.display_name,
-                                    SpecialtyInfo.code,
-                                    SpecialtyInfo.description,
-                                    SpecialtyInfo.popularity,
-                                    SpecialtyInfo.url_path)
+                                    SpecialtyDetails.classification,
+                                    SpecialtyDetails.specialization,
+                                    SpecialtyDetails.display_name,
+                                    SpecialtyDetails.code,
+                                    SpecialtyDetails.description,
+                                    SpecialtyDetails.popularity,
+                                    SpecialtyDetails.url_path)
     if query:
         search_query = search_query.filter(
-            or_(SpecialtyInfo.classification.ilike("%{}%".format(query)),
-                SpecialtyInfo.display_name.ilike("%{}%".format(query)),
-                SpecialtyInfo.specialization.ilike("%{}%".format(query)),
-                SpecialtyInfo.synonyms.ilike("%{}%".format(query)),
+            or_(SpecialtyDetails.classification.ilike("%{}%".format(query)),
+                SpecialtyDetails.display_name.ilike("%{}%".format(query)),
+                SpecialtyDetails.specialization.ilike("%{}%".format(query)),
+                SpecialtyDetails.synonyms.ilike("%{}%".format(query)),
                 ))
     if order_by and order_by in ['popularity', 'display_name']:
         if order_type == 'desc':
@@ -64,7 +64,7 @@ def autocomplete_by_service(query, limit, order_by, order_type):
         else:
             search_query = search_query.order_by(order_by)
     else:
-        search_query = search_query.order_by(SpecialtyInfo.display_name)
+        search_query = search_query.order_by(SpecialtyDetails.display_name)
     specialties = search_query.limit(limit)
 
     return return_response([s._asdict() for s in specialties])

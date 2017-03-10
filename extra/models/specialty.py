@@ -9,7 +9,7 @@ class SpecialtyReasonToVisit(db.Model, Serializer):
     reason_text = db.Column(db.Text, default='')
 
 
-class SpecialtyInfo(db.Model, BaseModel):
+class SpecialtyDetails(db.Model, BaseModel):
     __tablename__ = 'specialty'
     __table_args__ = {'schema': 'public'}
 
@@ -54,12 +54,12 @@ class MySpecialty(db.Model, BaseModel):
 
     @property
     def classification(self):
-        classification = db.session.query(SpecialtyInfo.classification).\
-            filter(SpecialtyInfo.code == self.specialty_code).first()
+        classification = db.session.query(SpecialtyDetails.classification).\
+            filter(SpecialtyDetails.code == self.specialty_code).first()
         return classification and classification[0]
 
     @property
     def specialization(self):
-        specialization = db.session.query(SpecialtyInfo.specialization).\
-            filter(SpecialtyInfo.code == self.specialty_code).first()
+        specialization = db.session.query(SpecialtyDetails.specialization).\
+            filter(SpecialtyDetails.code == self.specialty_code).first()
         return specialization and specialization[0]
