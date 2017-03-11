@@ -15,8 +15,8 @@ from root.api.utils import return_response, log, elapsed_time, split_int_ids
 @api.route('/address/')
 @use_kwargs({'aid': fields.request_int})
 def address(aid):
-    address = Address.query.get_or_404(aid)
-    return return_response(address.serialize())
+    add = Address.query.get_or_404(aid)
+    return return_response(add.serialize())
 
 
 @api.route('/address/batch/')
@@ -25,4 +25,3 @@ def address_batch(aid):
     aid_list = split_int_ids(aid)
     addresses = Address.query.filter(Address.id.in_(aid_list))
     return return_response([addr.serialize() for addr in addresses if addr])
-
